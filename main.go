@@ -6,6 +6,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -14,9 +15,14 @@ type Response struct {
 }
 
 func scoreHandler(w http.ResponseWriter, r *http.Request) {
-	apiCount := getAPICounts()
+	results, err1 := getAPICounts()
+	if err1 != nil {
+		log.Printf("Error getting API counts: %v", err1)
+		http.Error(w, err1.Error(), http.StatusInternalServerError)
+		return
+	}
 
-	score := getScore(apiCount)
+	score := getScore(results)
 
 	response := Response{
 		Score: score,

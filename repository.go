@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"log"
+	"fmt"
 	"os"
 
 	"cloud.google.com/go/bigquery"
@@ -10,35 +10,45 @@ import (
 )
 
 type Result struct {
-	Word  string
-	Count int
+	ReqUrl           string  `json:"reqUrl"`
+	ReqMethod        string  `json:"reqMethod"`
+	TotalNumRequests int     `json:"total_num_requests"`
+	AvgRps           float64 `json:"avg_rps"`
 }
 
-func getAPICounts() int {
+func getAPICounts() ([]Result, error) {
 	ctx := context.Background()
+
 	projectID := "tron-151603"
 	client, err := bigquery.NewClient(ctx, projectID)
 	if err != nil {
-		log.Fatalf("bigquery.NewClient: %v", err)
+		return nil, fmt.Errorf("bigquery.NewClient: %v", err)
 	}
 	defer client.Close()
 
 	queryBytes, err := os.ReadFile("query.sql")
 	if err != nil {
-		log.Fatalf("ioutil.ReadFile: %v", err)
+		return nil, fmt.Errorf("os.ReadFile: %v", err)
 	}
+
 	query := client.Query(string(queryBytes))
 	it, err := query.Read(ctx)
 	if err != nil {
-		log.Fatalf("query.Read: %v", err)
+		return nil, fmt.Errorf("query.Read: %v", err)
 	}
 
-	var result Result
-	if err := it.Next(&result); err == iterator.Done {
-		return 0
-	} else if err != nil {
-		log.Fatalf("iterator.Next: %v", err)
+	var results []Result
+	for {
+		var result Result
+		err := it.Next(&result)
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			return nil, fmt.Errorf("iterator.Next: %v", err)
+		}
+		results = append(results, result)
 	}
 
-	return result.Count
+	return results, nil
 }

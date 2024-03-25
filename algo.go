@@ -1,6 +1,9 @@
 package main
 
-func getScore(apiCount int) int {
-	weight := 10
-	return apiCount * weight
+func getScore(results []Result) int {
+	total := 0
+	for _, result := range results {
+		total += result.TotalNumRequests
+	}
+	return total
 }
