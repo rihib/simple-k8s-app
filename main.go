@@ -15,7 +15,7 @@ type Response struct {
 }
 
 func scoreHandler(w http.ResponseWriter, r *http.Request) {
-	results, err := getAPICounts()
+	results, err := getData()
 	if err != nil {
 		log.Printf("Error getting API counts: %v", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)

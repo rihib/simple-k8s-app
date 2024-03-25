@@ -13,7 +13,7 @@ type Result struct {
 	Count int
 }
 
-func getAPICounts() ([]Result, error) {
+func getData() ([]Result, error) {
 	ctx := context.Background()
 
 	projectID := "tron-151603"
