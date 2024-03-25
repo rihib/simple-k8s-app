@@ -15,10 +15,10 @@ type Response struct {
 }
 
 func scoreHandler(w http.ResponseWriter, r *http.Request) {
-	results, err1 := getAPICounts()
-	if err1 != nil {
-		log.Printf("Error getting API counts: %v", err1)
-		http.Error(w, err1.Error(), http.StatusInternalServerError)
+	results, err := getAPICounts()
+	if err != nil {
+		log.Printf("Error getting API counts: %v", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -28,7 +28,7 @@ func scoreHandler(w http.ResponseWriter, r *http.Request) {
 		Score: score,
 	}
 	w.Header().Set("Content-Type", "application/json")
-	err := json.NewEncoder(w).Encode(response)
+	err = json.NewEncoder(w).Encode(response)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

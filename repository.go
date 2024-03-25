@@ -10,10 +10,7 @@ import (
 )
 
 type Result struct {
-	ReqUrl           string  `json:"reqUrl"`
-	ReqMethod        string  `json:"reqMethod"`
-	TotalNumRequests int     `json:"total_num_requests"`
-	AvgRps           float64 `json:"avg_rps"`
+	Count int
 }
 
 func getAPICounts() ([]Result, error) {
