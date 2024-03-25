@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"os"
 
 	"cloud.google.com/go/bigquery"
 	"google.golang.org/api/iterator"
@@ -15,7 +16,6 @@ type Result struct {
 
 func getAPICounts() int {
 	ctx := context.Background()
-
 	projectID := "tron-151603"
 	client, err := bigquery.NewClient(ctx, projectID)
 	if err != nil {
@@ -23,13 +23,11 @@ func getAPICounts() int {
 	}
 	defer client.Close()
 
-	query := client.Query(`
-        SELECT word, COUNT(*) as count
-        FROM ` + "`bigquery-public-data.samples.shakespeare`" + `
-        GROUP BY word
-        ORDER BY count DESC
-        LIMIT 1;
-    `)
+	queryBytes, err := os.ReadFile("query.sql")
+	if err != nil {
+		log.Fatalf("ioutil.ReadFile: %v", err)
+	}
+	query := client.Query(string(queryBytes))
 	it, err := query.Read(ctx)
 	if err != nil {
 		log.Fatalf("query.Read: %v", err)
