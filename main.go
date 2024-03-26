@@ -14,6 +14,10 @@ type Response struct {
 	Score int `json:"score"`
 }
 
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, `<a href="/score">Go to /score</a>`)
+}
+
 func scoreHandler(w http.ResponseWriter, r *http.Request) {
 	results, err := getData()
 	if err != nil {
@@ -36,6 +40,7 @@ func scoreHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/score", scoreHandler)
 
 	err := http.ListenAndServe(":8080", nil)

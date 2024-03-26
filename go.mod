@@ -1,6 +1,6 @@
 module cyber-mavericks
 
-go 1.22.1
+go 1.22
 
 require (
 	cloud.google.com/go v0.112.1 // indirect

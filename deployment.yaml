@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cyber-mavericks
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cyber-mavericks
+  template:
+    metadata:
+      labels:
+        app: cyber-mavericks
+    spec:
+      containers:
+        - name: cyber-mavericks
+          image: cyber-mavericks:20240326151818
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
