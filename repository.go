@@ -16,7 +16,7 @@ type Result struct {
 func getData() ([]Result, error) {
 	ctx := context.Background()
 
-	projectID := "tron-151603"
+	projectID := "your-project-id"
 	client, err := bigquery.NewClient(ctx, projectID)
 	if err != nil {
 		return nil, fmt.Errorf("bigquery.NewClient: %v", err)

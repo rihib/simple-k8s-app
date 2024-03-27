@@ -11,7 +11,7 @@ import (
 )
 
 type Response struct {
-	Score int `json:"score"`
+	Score int
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {

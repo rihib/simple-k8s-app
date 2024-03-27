@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: cyber-mavericks
-          image: cyber-mavericks:20240326151818
+          image: cyber-mavericks:20240327212332
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

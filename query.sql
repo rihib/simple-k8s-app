@@ -1,5 +1,5 @@
-SELECT word, COUNT(*) as count
-FROM `bigquery-public-data.samples.shakespeare`
+SELECT COUNT(*) as count
+FROM bigquery-public-data.samples.shakespeare
 GROUP BY word
 ORDER BY count DESC
-LIMIT 1;
+LIMIT 10;

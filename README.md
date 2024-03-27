@@ -17,7 +17,7 @@ See [this](https://www.baeldung.com/ops/docker-local-images-minikube) for more i
 
 ```zsh
 eval $(minikube -p minikube docker-env)  # Point shell to minikube's docker-daemon
-minikube image build -t cyber-mavericks -f ./Dockerfile .  # Build docker image in minikube
+minikube image build -t cyber-mavericks:$(date +%Y%m%d%H%M%S) -f ./Dockerfile .  # Build docker image in minikube
 minikube image ls --format table  # List images in minikube
 # Change image tag in deployment.yaml
 kubectl apply -f deployment.yaml  # Apply deployment
