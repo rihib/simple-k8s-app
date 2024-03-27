@@ -1,4 +1,4 @@
-# Cyber Marvericks
+# Simple k8s App
 
 ## Setup
 
