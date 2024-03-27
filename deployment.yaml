@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cyber-mavericks
+  name: simple-k8s-app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: cyber-mavericks
+      app: simple-k8s-app
   template:
     metadata:
       labels:
-        app: cyber-mavericks
+        app: simple-k8s-app
     spec:
       containers:
-        - name: cyber-mavericks
-          image: cyber-mavericks:20240327212332
+        - name: simple-k8s-app
+          image: simple-k8s-app:20240327212332
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
